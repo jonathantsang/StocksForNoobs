@@ -29,12 +29,14 @@ io.on('connection', function(socket){
   	});
 })
 
-var names = [];
-function Scrape(word){
-  var query = word; // Hardcode for now
-  var url = "https://www.google.com/finance?noIL=1&q=" + query;
 
-  request(url, function (error, response, html) {
+function Scrape(word){
+	var names = [];
+	var dict = {};
+	var query = word; // Hardcode for now
+	var url = "https://www.google.com/finance?noIL=1&q=" + query;
+	tickers = [];
+	request(url, function (error, response, html) {
     if (!error && response.statusCode == 200) {
         var $ = cheerio.load(html);
         $('td.symbol').each(function(i, element){
@@ -42,17 +44,22 @@ function Scrape(word){
         	var ticker = /[A-Z][A-Z][A-Z][A-Z]?/
         	var res = ticker.exec(a.text());
         	if(res != null){
-            	names.push(res[0]);
+        		if(res in dict){
+        			console.log("duplicate");
+        		} else {
+        			dict[res] = true;
+        			names.push(res[0]);
+        		}	
         	}
         });
-      }
+    }
     console.log(names);
     tickers = names;
-		for(var i = 0; i < tickers.length; i++){
-    		console.log(i + " = " + tickers[i]);
-		}
-		console.log("queried " + tickers);
-		io.emit('tickersreceived', {tickerData: tickers});
+	for(var i = 0; i < tickers.length; i++){
+    	console.log(i + " = " + tickers[i]);
+	}
+	console.log("queried " + tickers);
+	io.emit('tickersreceived', {tickerData: tickers});
   });
 }
 
