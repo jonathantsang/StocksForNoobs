@@ -4,10 +4,11 @@ const request = require('request');
 var http = require('http').Server(app)
 var io = require("socket.io")(http)
 var cheerio = require('cheerio');
-var unique = require('uniq');
 var port = process.env.PORT || 3000;
 
-app.use(express.static('.'));
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
 
 http.listen(port, function(){
   console.log('listening on *:' + port);
