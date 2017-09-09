@@ -24,6 +24,4 @@ function Scrape(){
   return names;
 }
 
-Scrape();
-
 
