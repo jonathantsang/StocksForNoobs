@@ -104,8 +104,8 @@
         		// Blackrock API
         		$.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
         			console.log(response)
-        			console.log(response.resultMap.SEARCH_RESULTS.maxScore);
-        			$('#info').append('<p>' + response.resultMap.SEARCH_RESULTS.maxScore + '</p>')
+        			console.log(response.resultLength);
+        			$('#info').append('<p>' + response.resultLength + '</p>')
         		});
 
 
