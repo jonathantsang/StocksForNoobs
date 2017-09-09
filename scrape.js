@@ -1,3 +1,6 @@
+const request = require('request');
+var cheerio = require('cheerio');
+
 function Scrape(){
   var names = [];
   var query = "bread"; // Hardcode for now
@@ -21,8 +24,6 @@ function Scrape(){
   return names;
 }
 
-var test = "Hello";
-document.getElementById("mytext").value = test;
-
+Scrape();
 
 
