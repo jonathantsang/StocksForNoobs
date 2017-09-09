@@ -5,12 +5,13 @@ var http = require('http').Server(app)
 var io = require("socket.io")(http)
 var cheerio = require('cheerio');
 var unique = require('uniq');
+var port = process.env.PORT || 3000;
 
 app.use(express.static('.'));
 
-http.listen(3000, function () {
-  console.log('Example app listening on port 3000');
-})
+http.listen(port, function(){
+  console.log('listening on *:' + port);
+});
 
 io.on('connection', function(socket){
 	socket.emit('youreconnected');
