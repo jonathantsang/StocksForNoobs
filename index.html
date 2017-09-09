@@ -1,5 +1,52 @@
 <html>
 
+<style>
+	body {background-color: lightblue;}
+	h1 {
+		color: white;
+		text-shadow: 3px 2.5px 5px #000000;
+
+	}
+
+	.button {
+		background-color:white;
+		border: none;
+		color: blue;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+		box-shadow: 4px 4px 10px grey;
+	}
+	.pagination {
+		display: inline-block;
+	}
+
+	.pagination a {
+		color: black;
+		float: left;
+		padding: 8px 16px;
+		text-decoration: none;
+	}
+
+	.pagination a.active {
+		background-color: #4CAF50;
+		color: white;
+		border-radius: 5px;
+	}
+
+	.pagination a:hover:not(.active) {
+		background-color: #ddd;
+		border-radius: 10px;
+	}
+
+</style>
+
+<h1>Stock Market Website</h1>
+
 <ul id="choices">
 </ul>
 
@@ -7,6 +54,22 @@
       <input id="m" autocomplete="off" />
       <button>Send</button>
     </form>
+
+<ul id="info">
+</ul>
+
+<br>
+<br>
+<div class="pagination">
+	<a href="#">&laquo;</a>
+	<a href="#" class="active">1</a>
+	<a href="#" >2</a>
+	<a href="#">3</a>
+	<a href="#">4</a>
+	<a href="#">5</a>
+	<a href="#">6</a>
+	<a href="#">&raquo;</a>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -33,10 +96,24 @@
         	console.log(data.tickerData);
         	console.log(data.priceData);
         	console.log(data.marketCapData);
+        	console.log(data.descriptionsData);
         	$('#choices').empty();
         	for(var i = 0; i < data.tickerData.length; i++){
-        		$('#choices').append('<p>' + data.tickerData[i] + " " + data.priceData[i] + " " + data.marketCapData[i] + '</p>');
+        		$('#choices').append('<h2>' + data.tickerData[i] + "</h2> ");
+
+        		// Blackrock API
+        		$.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
+        			console.log(response)
+        			console.log(response.resultMap.SEARCH_RESULTS.maxScore);
+        			$('#info').append('<p>' + response.resultMap.SEARCH_RESULTS.maxScore + '</p>')
+        		});
+
+
+        		$('#choices').append('<p>' + data.priceData[i] + " " + data.marketCapData[i] + '</p>');
+        		$('#choices').append('<p>' + data.descriptionsData[i] + '</p>');
         	}
+
+        	
 		})
 	});
 

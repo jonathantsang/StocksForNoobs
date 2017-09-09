@@ -31,10 +31,7 @@ io.on('connection', function(socket){
 
 
 function Scrape(word){
-	var data = {names : [], prices : [], marketCaps : [] }
-	var names = [];
-	var prices = [];
-	var marketCaps = [];
+	var data = {names : [], prices : [], marketCaps : [], descriptions : [] }
 
 	var dict = {};
 	var query = word; // Hardcode for now
@@ -67,6 +64,7 @@ function Scrape(word){
 
         // Get the prices 
         $('td.price').each(function(i, element){
+        	// $('td.exch');
         	var a = $(this);
         	var ticker = /[0-9]+\.[0-9]+/
         	var res = ticker.exec(a.text());
@@ -92,21 +90,37 @@ function Scrape(word){
         	}
         });
         console.log(data.marketCaps);
+
+        // Get the descriptions
+        $('div.description').each(function(i, element){
+        	var a = $(this);
+        	var ticker = /.*/
+        	var res = ticker.exec(a.text());
+        	if(res != null){
+        		data.descriptions.push(res[0]);
+        		console.log(res[0]);
+        	} else {
+        		data.descriptions.push(null);
+        	}
+        });
+        console.log(data.descriptions);
     }
     // Validate the data by checking each row
     var resultsPerPage = 20;
-    var alteredData = {names : [], prices : [], marketCaps : []}
+    var alteredData = {names : [], prices : [], marketCaps : [], descriptions : []}
     for(var i = 0; i < resultsPerPage; i++){
-    	if((data.names[i] != null) && data.prices[i] != null && data.marketCaps[i] != null){
+    	if(data.names[i] != null && data.prices[i] != null && data.marketCaps[i] != null && data.descriptions[i] != null){
     		alteredData.names.push(data.names[i]);
     		alteredData.prices.push(data.prices[i]);
     		alteredData.marketCaps.push(data.marketCaps[i]);
+    		alteredData.descriptions.push(data.descriptions[i]);
     	}
     }
 
     // Send the data to the front end
 	console.log("queried");
-	io.emit('tickersreceived', {tickerData: alteredData.names, priceData: alteredData.prices, marketCapData: alteredData.marketCaps});
+	io.emit('tickersreceived', {tickerData: alteredData.names, priceData: alteredData.prices, marketCapData: alteredData.marketCaps,
+		descriptionsData : alteredData.descriptions });
   });
 }
 
