@@ -103,8 +103,6 @@
 
         		// Blackrock API
         		$.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
-        			console.log(response)
-        			console.log(response.resultLength);
         			$('#info').append('<p>' + response.resultLength + '</p>')
         		});
 
@@ -116,8 +114,8 @@
         	
 		})
 	});
-
-
 </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
 
 </html>
