@@ -35,7 +35,7 @@
         	console.log(data.marketCapData);
         	$('#choices').empty();
         	for(var i = 0; i < data.tickerData.length; i++){
-        		$('#choices').append('<p>' + data.tickerData[i] + '</p>');
+        		$('#choices').append('<p>' + data.tickerData[i] + data.priceData[i] + data.marketCapData[i]'</p>');
         	}
 		})
 	});
