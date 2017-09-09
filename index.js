@@ -31,7 +31,11 @@ io.on('connection', function(socket){
 
 
 function Scrape(word){
+	var data = {names : [], prices : [], marketCaps : [] }
 	var names = [];
+	var prices = [];
+	var marketCaps = [];
+
 	var dict = {};
 	var query = word; // Hardcode for now
 	var url = "https://www.google.com/finance?noIL=1&q=" + query;
@@ -46,23 +50,63 @@ function Scrape(word){
         	if(res != null){
         		if(res in dict){
         			console.log("duplicate");
+        			data.names.push(null);
         		} else {
         			dict[res] = true;
         			// hardcode if it is length 3 or 4 keep it (not 5)
         			if(res[0].length == 3 || res[0].length == 4){
-        				names.push(res[0]);
+        				data.names.push(res[0]);
+        			} else {
+        				data.names.push(null);
         			}
         		}	
+        	} else {
+        		data.names.push(null);
         	}
         });
+
+        // Get the prices 
+        $('td.price').each(function(i, element){
+        	var a = $(this);
+        	var ticker = /[0-9]+\.[0-9]+/
+        	var res = ticker.exec(a.text());
+        	if(res != null){
+        		data.prices.push(res[0]);
+        		console.log(res[0]);
+        	} else {
+        		data.prices.push(null);
+        	}
+        });
+        console.log(data.prices);
+
+        // Get the marketCaps
+        $('td.mktCap').each(function(i, element){
+        	var a = $(this);
+        	var ticker = /[0-9]+\.[0-9]+[A-Z]?/
+        	var res = ticker.exec(a.text());
+        	if(res != null){
+        		data.marketCaps.push(res[0]);
+        		console.log(res[0]);
+        	} else {
+        		data.marketCaps.push(null);
+        	}
+        });
+        console.log(data.marketCaps);
     }
-    console.log(names);
-    tickers = names;
-	for(var i = 0; i < tickers.length; i++){
-    	console.log(i + " = " + tickers[i]);
-	}
-	console.log("queried " + tickers);
-	io.emit('tickersreceived', {tickerData: tickers});
+    // Validate the data by checking each row
+    var resultsPerPage = 20;
+    var alteredData = {names : [], prices : [], marketCaps : []}
+    for(var i = 0; i < resultsPerPage; i++){
+    	if((data.names[i] != null) && data.prices[i] != null && data.marketCaps[i] != null){
+    		alteredData.names.push(data.names[i]);
+    		alteredData.prices.push(data.prices[i]);
+    		alteredData.marketCaps.push(data.marketCaps[i]);
+    	}
+    }
+
+    // Send the data to the front end
+	console.log("queried");
+	io.emit('tickersreceived', {tickerData: alteredData.names, priceData: alteredData.prices, marketCapData: alteredData.marketCaps});
   });
 }
 

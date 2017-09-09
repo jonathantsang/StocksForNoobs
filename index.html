@@ -31,6 +31,8 @@
 		// Formats the tickers
         socket.on('tickersreceived', function(data){
         	console.log(data.tickerData);
+        	console.log(data.priceData);
+        	console.log(data.marketCapData);
         	$('#choices').empty();
         	for(var i = 0; i < data.tickerData.length; i++){
         		$('#choices').append('<p>' + data.tickerData[i] + '</p>');
