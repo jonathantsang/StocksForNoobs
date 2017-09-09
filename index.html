@@ -1,11 +1,41 @@
 <html>
 
-<input type="text" id="mytext">
+<ul id="choices">
+</ul>
 
-<div id="results">
+<form action="">
+      <input id="m" autocomplete="off" />
+      <button>Send</button>
+    </form>
 
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="jquery-3.2.1.min.js"></script>
+<script>
+	var socket = io();
+	$(document).ready( function (){
+
+		socket.on('youreconnected', function(){
+			console.log("Hey you're connected");
+		})
+
+		// When the button is pressed, query the tickers
+		$('form').submit(function() {
+          var query = $('#m');
+          console.log("submitted");
+          console.log(query.val());
+          socket.emit('querytickers', query.val());
+          $('#m').val('');
+          return false;
+        });
+
+		// Formats the tickers
+        socket.on('tickersreceived', function(data){
+        	console.log(data.tickerData);
+        	for(var i = 0; i < data.tickerData.length; i++){
+        		$('#choices').append('<p>' + data.tickerData[i] + '</p>');
+        	}
+		})
+	});
+</script>
 
 </html>

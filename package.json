@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^14.4.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "socket.io": "^2.0.3",
+    "uniq": "^1.0.1"
   }
 }
