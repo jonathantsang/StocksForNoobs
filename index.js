@@ -41,14 +41,17 @@ function Scrape(word){
         var $ = cheerio.load(html);
         $('td.symbol').each(function(i, element){
         	var a = $(this);
-        	var ticker = /[A-Z][A-Z][A-Z][A-Z]?/
+        	var ticker = /[A-Z]+/
         	var res = ticker.exec(a.text());
         	if(res != null){
         		if(res in dict){
         			console.log("duplicate");
         		} else {
         			dict[res] = true;
-        			names.push(res[0]);
+        			// hardcode if it is length 3 or 4 keep it (not 5)
+        			if(res[0].length == 3 || res[0].length == 4){
+        				names.push(res[0]);
+        			}
         		}	
         	}
         });
