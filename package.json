@@ -11,9 +11,12 @@
     "express": "^4.15.4",
     "request": "^2.81.0",
     "socket.io": "^2.0.3",
-    "uniq": "^1.0.1"
+    "uniq": "^1.0.1",
   },
   "scripts": {
     "start": "node index.js"
+  },
+  "devDependencies": {
+    "chart.js": "^2.6.0"
   }
 }
