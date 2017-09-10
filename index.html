@@ -71,17 +71,14 @@
 		z-index: -1;
 	}
 
-<<<<<<< HEAD
 	h1 {
 		bottom: 340px;
 		left: 140px;
 	}
-=======
 	body {
 		overflow: hidden;
 	}
 	
->>>>>>> ccb55fadff8bf6a75133753a9da7e8e25b9ad886
 
 </style>
 */
@@ -103,12 +100,11 @@
         </div>
         <div class="modal-body">
           <p><ul id="choices">
-			/*
 			<script type="text/javascript">
-	window.onload = function() {
-		var chart = new CanvasJS.Chart("chartContainer", {
-			title: {
-				text: "Line Chart"
+	function makeChart(i){
+			var chart = new CanvasJS.Chart("chartContainer" + i, {
+				title: {
+					text: "Line Chart"
 			},
 			axisX: {
 				interval: 10
@@ -120,19 +116,12 @@
 				  { x: 20, y: 14 },
 				  { x: 30, y: 20 },
 				  { x: 40, y: 60 },
-				  { x: 50, y: 50 },
-				  { x: 60, y: 80 },
 				]
 			}]
 		});
 		chart.render();
 	}
 	</script>
-
-
-
-
-			*/
 
           </ul></p>
         </div>
@@ -157,16 +146,9 @@
 <br>
 <br>
 
-<<<<<<< HEAD
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/jquery.canvasjs.min.js"></script>
 
-<body>
-	<div id="chartContainer" style="height: 400px; width: 100%;"></div>
-</body>
-
 </html>
-=======
->>>>>>> ccb55fadff8bf6a75133753a9da7e8e25b9ad886
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -203,12 +185,14 @@
         		 	$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
         		});
 
+        		$('#choices').append('<div id=chartContainer' + i + " " + 'style="height: 400px; width: 100%;"></div>');
+
+        		makeChart(i);
 
         		$('#choices').append('<p class="priceCap">' + "Price: " + data.priceData[i] + '  ' +  "Market Cap: " + data.marketCapData[i] + '</p>');
         		$('#choices').append('<p>' + data.descriptionsData[i] + '</p>');
 			
         	}
-
         	
 		})
 	});
