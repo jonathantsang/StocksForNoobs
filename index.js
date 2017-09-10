@@ -97,7 +97,7 @@ function Scrape(word) {
 	var resultsPerPage = 20;
 	var alteredData = { names: [], prices: [], marketCaps: [], descriptions: [] }
 	for (var i = 0; i < resultsPerPage; i++) {
-		if (data.names[i] != null && data.prices[i] != null && data.marketCaps[i] != null && data.descriptions[i] != null) {
+		if (data.names[i] != null && data.prices[i] != null && data.marketCaps[i] != null /*&& data.descriptions[i] != null*/) {
 			alteredData.names.push(data.names[i]);
 			alteredData.prices.push(data.prices[i]);
 			alteredData.marketCaps.push(data.marketCaps[i]);
@@ -120,11 +120,10 @@ function Scrape(word) {
 			if (!error && response.statusCode == 200) {
 				var $ = cheerio.load(html);
 				var words = $('span.description-text');
-				console.log(words);
-				var res = words;
+				var res = words.text();
 					if (res != null) {
+						console.log(res)
 						data.descriptions.push(res[0]);
-						console.log(res);
 					} else {
 						data.descriptions.push(null);
 						console.log("didn't work");
