@@ -99,9 +99,6 @@ body {
 			<script type="text/javascript">
 	function makeChart(i, arrayOfPoints){
 			var chart = new CanvasJS.Chart("chartContainer" + i, {
-				title: {
-					text: "Line Chart"
-			},
 			data: [{
 				type: "line",
 				dataPoints: arrayOfPoints
@@ -202,7 +199,7 @@ body {
         	var p = 0;
         	for(var k = 0; k < data.tickerData.length; k++){
         		console.log(k);
-        		$('#choices').append('<h2 class="tickers">' + data.tickerData[k] + "</h2> ");
+        		$('#choices').append('<h2 class="tickers">' + data.tickerData[k] + " - " + data.titleData[k] + "</h2> ");
         		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 100%;"></div>');
 
         		// Blackrock API to get past data

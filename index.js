@@ -33,7 +33,7 @@ io.on('connection', function(socket){
 
 
 function Scrape(word){
-	var data = {names : [], prices : [], marketCaps : [], descriptions : [] }
+	var data = {names : [], titles : [], prices : [], marketCaps : [], descriptions : [] }
 
 	var dict = {};
 	var query = word; // Hardcode for now
@@ -63,6 +63,20 @@ function Scrape(word){
         		data.names.push(null);
         	}
         });
+
+        // Get the title
+        $('td.localName').each(function(i, element){
+        	var a = $(this);
+        	var res = a.text();
+        	console.log(res);
+        	if(res != null){
+        		data.titles.push(res);
+        		console.log(res);
+        	} else {
+        		data.titles.push(null);
+        	}
+        });
+        console.log(data.titles);
 
         // Get the prices 
         $('td.price').each(function(i, element){
@@ -109,10 +123,11 @@ function Scrape(word){
     }
     // Validate the data by checking each row
     var resultsPerPage = 15;
-    var alteredData = {names : [], prices : [], marketCaps : [], descriptions : []}
+    var alteredData = {names : [], titles : [], prices : [], marketCaps : [], descriptions : []}
     for(var i = 0; i < resultsPerPage; i++){
-    	if(data.names[i] != null && data.prices[i] != null && data.marketCaps[i] != null && data.descriptions[i] != null){
+    	if(data.names[i] != null && data.titles[i] != null && data.prices[i] != null && data.marketCaps[i] != null && data.descriptions[i] != null){
     		alteredData.names.push(data.names[i]);
+    		alteredData.titles.push(data.titles[i]);
     		alteredData.prices.push(data.prices[i]);
     		alteredData.marketCaps.push(data.marketCaps[i]);
     		alteredData.descriptions.push(data.descriptions[i]);
@@ -121,7 +136,7 @@ function Scrape(word){
 
     // Send the data to the front end
 	console.log("queried");
-	io.emit('tickersreceived', {tickerData: alteredData.names, priceData: alteredData.prices, marketCapData: alteredData.marketCaps,
+	io.emit('tickersreceived', {tickerData: alteredData.names, titleData: alteredData.titles, priceData: alteredData.prices, marketCapData: alteredData.marketCaps,
 		descriptionsData : alteredData.descriptions });
   });
 }
