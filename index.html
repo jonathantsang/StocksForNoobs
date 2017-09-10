@@ -11,43 +11,29 @@
 </head>
 
 <style>
-	/*h1 {
-		color: white;
-		text-shadow: 3px 2.5px 5px #000000;
-
-	}*/
-
-	/*#choices{
-		
-	}*/
 	.input{
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		margin-top: -50px;
-		margin-left: -100px;
-		
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.input, .send{
+		display: block;
+
 	}
 
 	.send{
-		position: relative;
-		top: 35px;
-		right: 130px;
+		margin: 0 auto;	
 		font-family: 'Open Sans', sans-serif;
 	}
 
 	.header{
-		position: fixed;
-		left: 510px;
-		bottom: 450px;
+		text-align: center;
 		opacity: 0.9;
 		font-family: 'Open Sans', sans-serif;
 	}
 
 	.header2{
-		position: fixed;
-		left: 475px;
-		bottom: 350px;
+		text-align: center;
 		opacity: 0.9;
 		font-family: 'Open Sans', sans-serif;
 	}
@@ -57,26 +43,37 @@
 		margin: 0;
 	}*/
 
-	.bg { 
-    /* The image used */
+	.everything::before { 
+		
 		background-image: url('https://ecohousescam.files.wordpress.com/2013/06/money-grow.jpg');
-		/* Full height */
-		height: 100%; 
 		opacity: 0.5;
-
-		/* Center and scale the image nicely */
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
 		z-index: -1;
+		height: 100%;
 	}
 
-	h1 {
-		bottom: 340px;
-		left: 140px;
-	}
 	body {
 		overflow: hidden;
+	}
+
+	.inputty{
+		
+		text-align:center;
+	}
+
+	.everything{
+		 position: relative;
+  		 
+		 height: 100%;
 	}
 	
 
