@@ -50,16 +50,12 @@ function Scrape(word) {
 						// hardcode if it is length 3 or 4 keep it (not 5)
 						if (res[0].length == 3 || res[0].length == 4) {
 							data.names.push(res[0]);
-							lookZach(res[0]);
 						} else {
 							data.names.push(null);
-							data.descriptions.push(null);
 						}
 					}
 				} else {
 					data.names.push(null);
-					data.descriptions.push(null);
-
 				}
 			});
 			console.log(data.names);
@@ -108,26 +104,27 @@ function Scrape(word) {
 	io.emit('tickersreceived', { tickerData: alteredData.names, priceData: alteredData.prices, marketCapData: alteredData.marketCaps,
 		descriptionsData: alteredData.descriptions
 	});
-
 }
 
-// For each name get the description
-	function lookZach(name){
-		query = name;
+	// For each name get the description
+	function lookDescrip(name){
+		console.log("descrip")
+		var query = name;
 		var newURL = 'https://www.cnbc.com/quotes/?symbol=' + query + '&tab=profile';
 		request(newURL, function(error, response, html) {
 			console.log(response.statusCode);
 			if (!error && response.statusCode == 200) {
 				var $ = cheerio.load(html);
-				var words = $('span.description-text');
-				var res = words.text();
+				$('span.description').each(function(i, element) {
+					var res = words.text();
 					if (res != null) {
-						console.log(res)
+						console.log(res[0]);
 						data.descriptions.push(res[0]);
 					} else {
 						data.descriptions.push(null);
 						console.log("didn't work");
 					}
+				});
 			}
 			console.log(data.descriptions);
 		});
