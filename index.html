@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>Stocks for Noobs</title>
+  <title>Interest.Invest</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,76 +11,77 @@
 </head>
 
 <style>
-	.input{
-		margin: 0 auto;
-		text-align: center;
-	}
+	
+.input{
+	margin: 0 auto;
+	text-align: center;
+}
 
-	.input, .send{
-		display: block;
+.input, .send{
+	display: block;
 
-	}
+}
 
-	.send{
-		margin: 0 auto;	
-		font-family: 'Open Sans', sans-serif;
-	}
+.send{
+	margin: 0 auto;	
+	font-family: 'Open Sans', sans-serif;
+}
 
-	.header{
-		text-align: center;
-		opacity: 0.9;
-		font-family: 'Open Sans', sans-serif;
-	}
+.header{
+	text-align: center;
+	opacity: 0.9;
+	font-family: 'Open Sans', sans-serif;
+}
 
-	.header2{
-		text-align: center;
-		opacity: 0.9;
-		font-family: 'Open Sans', sans-serif;
-	}
+.header2{
+	text-align: center;
+	opacity: 0.9;
+	font-family: 'Open Sans', sans-serif;
+}
 
-	/*body, html {
-		height: 100%;
-		margin: 0;
-	}*/
+/*body, html {
+	height: 100%;
+	margin: 0;
+}*/
 
-	.everything::before { 
-		
-		background-image: url('https://ecohousescam.files.wordpress.com/2013/06/money-grow.jpg');
-		opacity: 0.5;
-		content: "";
-		position: absolute;
-		z-index: -1;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		z-index: -1;
-		height: 100%;
-	}
+.everything::before { 
+	
+	background-image: url('https://ecohousescam.files.wordpress.com/2013/06/money-grow.jpg');
+	opacity: 0.5;
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	z-index: -1;
+	height: 100%;
+}
 
-	body {
-		overflow: hidden;
-	}
+body {
+	overflow: hidden;
+}
 
-	.inputty{
-		
-		text-align:center;
-	}
+.inputty{
+	
+	text-align:center;
+}
 
-	.everything{
-		 position: relative;
-  		 
-		 height: 100%;
-	}
+.everything{
+	position: relative;
+	height: 100%;
+}
+
 	
 
 </style>
 
 <body>
-	<div class="bg"></div>
+	<div class="everything">
 
 
 <div class="container">
@@ -146,14 +147,17 @@
     </div>
   </div>
 </div>
+<br><br><br><br>
 <h1 class="header">Interest.Invest</h1>
 <p class="header2">Search Investment Ideas through your Interests<p>
-
-	<form action="" class="input text-center">
-      <input id="m" autocomplete="off" />
+<br><br>
+<div class="inputty">
+	<form action="">
+      <input id="m" class="input" autocomplete="off" />
+	  <br>
       <button class="btn btn-success send" data-toggle="modal" data-target="#myModal">Search</button>
     </form>
-
+</div>
 <ul id="info">
 </ul>
 
