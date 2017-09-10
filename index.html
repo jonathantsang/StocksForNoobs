@@ -26,6 +26,7 @@
 		left: 50%;
 		margin-top: -50px;
 		margin-left: -100px;
+		
 	}
 
 	.send{
@@ -36,7 +37,18 @@
 	}
 
 	.header{
-	
+		position: fixed;
+		left: 510px;
+		bottom: 450px;
+		opacity: 0.9;
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.header2{
+		position: fixed;
+		left: 475px;
+		bottom: 350px;
+		opacity: 0.9;
 		font-family: 'Open Sans', sans-serif;
 	}
 
@@ -57,16 +69,13 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
-		z-index: -2;
+		z-index: -1;
 	}
 
 	body {
 		overflow: hidden;
 	}
-	h1 {
-		bottom: 340px;
-		left: 140px;
-	}
+	
 
 </style>
 
@@ -75,7 +84,7 @@
 
 
 <div class="container">
- <h1 class="header">Stock Market Website</h1>
+ 
 
   <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-lg">
@@ -94,8 +103,10 @@
     </div>
   </div>
 </div>
+<h1 class="header">Interest.Invest</h1>
+<p class="header2">Search Investment Ideas through your Interests<p>
 
-<form action="" class="input">
+	<form action="" class="input text-center">
       <input id="m" autocomplete="off" />
       <button class="btn btn-success send" data-toggle="modal" data-target="#myModal">Search</button>
     </form>
@@ -105,16 +116,7 @@
 
 <br>
 <br>
-<!--<div class="pagination">
-	<a href="#">&laquo;</a>
-	<a href="#" class="active">1</a>
-	<a href="#" >2</a>
-	<a href="#">3</a>
-	<a href="#">4</a>
-	<a href="#">5</a>
-	<a href="#">6</a>
-	<a href="#">&raquo;</a>
-</div>-->
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -152,8 +154,9 @@
         		// });
 
 
-        		$('#choices').append('<p>' + data.priceData[i] + " " + data.marketCapData[i] + '</p>');
+        		$('#choices').append('<p class="priceCap">' + "Price: " + data.priceData[i] + '  ' +  "Market Cap: " + data.marketCapData[i] + '</p>');
         		$('#choices').append('<p>' + data.descriptionsData[i] + '</p>');
+			
         	}
 
         	
