@@ -99,24 +99,27 @@
         <div class="modal-body">
           <p><ul id="choices">
 			<script type="text/javascript">
-	function makeChart(i){
+	function makeChart(i, arrayOfPoints){
 			var chart = new CanvasJS.Chart("chartContainer" + i, {
 				title: {
 					text: "Line Chart"
 			},
-			axisX: {
-				interval: 10
-			},
 			data: [{
 				type: "line",
-				dataPoints: [
-				  { x: Math.floor(Math.random() * 10) + 0, y: Math.floor(Math.random() * 50) },
-				  { x: Math.floor(Math.random() * 22) + 22, y: Math.floor(Math.random() * 19) },
-				  { x: Math.floor(Math.random() * 46) + 46, y: Math.floor(Math.random() * 33) },
-				  { x: Math.floor(Math.random() * 60) + 60, y: Math.floor(Math.random() * 10) },
-				]
-			}]
-		});
+				dataPoints: arrayOfPoints
+			}],
+			scales: {
+      			xAxes: [{
+        			display: false,
+        			ticks: {
+          				min: 0
+        			}
+      			}],
+      			yAxes: [{
+        			display: false
+      			}],
+    		}
+			});
 		chart.render();
 	}
 	</script>
@@ -179,24 +182,36 @@
 		// Formats the tickers
         socket.on('tickersreceived', function(data){
         	$('#choices').empty();
-        	for(var i = 0; i < data.tickerData.length; i++){
-        		$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
+        	var p = 0;
+        	for(var k = 0; k < data.tickerData.length; k++){
+        		console.log(k);
+        		$('#choices').append('<h2 class="tickers">' + data.tickerData[k] + "</h2> ");
+        		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 100%;"></div>');
 
         		// Blackrock API to get past data
-        		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
-        		 	console.log(response.resultMap.RETURNS);
-        		 	$('tickers').append('<h2 class="blackrock">' + response.resultMap.RETURNS + "</h2> ");
+        		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[k] }, function(response) {
+        		 	var arrayOfPoints = [];
+        		 	if(response.resultMap.RETURNS != undefined && response.resultMap.RETURNS != null){
+        		 		// Go through performanceChart
+        		 		for(var j = 0; j < 50; j++){
+        		 			var point = {x: response.resultMap.RETURNS[0].performanceChart[j][0], y: response.resultMap.RETURNS[0].performanceChart[j][1]};
+        		 			arrayOfPoints.push(point);
+        		 		}
+        		 		makeChart(p, arrayOfPoints);
+        		 		p++;
+        		 	} else {
+        		 		for(var j = 0; j < 50; j++){
+        		 			var point = {x: j, y: Math.random() * 10};
+        		 			arrayOfPoints.push(point);
+        		 		}
+        		 		makeChart(p, arrayOfPoints);
+        		 		p++;
+        		 	}
         		});
-
-        		$('#choices').append('<div id=chartContainer' + i + " " + 'style="height: 400px; width: 100%;"></div>');
-
-        		makeChart(i);
-
-        		$('#choices').append('<p class="priceCap">' + "<strong>Price: </strong> " + data.priceData[i] + '  ' +  "<strong>Market Cap: </strong>" + data.marketCapData[i] + '</p>');
-        		$('#choices').append('<p>' + data.descriptionsData[i] + '</p>');
-			
+        		
+        		$('#choices').append('<p class="priceCap">' + "<strong>Price: </strong> " + data.priceData[k] + '  ' +  "<strong>Market Cap: </strong>" + data.marketCapData[k] + '</p>');
+        		$('#choices').append('<p>' + data.descriptionsData[k] + '</p>');
         	}
-        	
 		})
 	});
 </script>
