@@ -1,58 +1,103 @@
-<html>
+<html lang="en">
+<head>
+  <title>Stocks for Noobs</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</head>
 
 <style>
-	body {background-color: lightblue;}
-	h1 {
+	/*h1 {
 		color: white;
 		text-shadow: 3px 2.5px 5px #000000;
 
+	}*/
+
+	/*#choices{
+		
+	}*/
+	.input{
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -100px;
 	}
 
-	.button {
-		background-color:white;
-		border: none;
-		color: blue;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		margin: 4px 2px;
-		cursor: pointer;
-		box-shadow: 4px 4px 10px grey;
-	}
-	.pagination {
-		display: inline-block;
+	.send{
+		position: relative;
+		top: 35px;
+		right: 130px;
+		font-family: 'Open Sans', sans-serif;
 	}
 
-	.pagination a {
-		color: black;
-		float: left;
-		padding: 8px 16px;
-		text-decoration: none;
+	.header{
+	
+		font-family: 'Open Sans', sans-serif;
 	}
 
-	.pagination a.active {
-		background-color: #4CAF50;
-		color: white;
-		border-radius: 5px;
+	/*body, html {
+		height: 100%;
+		margin: 0;
+	}*/
+
+	.bg { 
+    /* The image used */
+		
+		background-image: url('https://ecohousescam.files.wordpress.com/2013/06/money-grow.jpg');
+		/* Full height */
+		height: 100%; 
+		opacity: 0.5;
+
+		/* Center and scale the image nicely */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		z-index: -2;
 	}
 
-	.pagination a:hover:not(.active) {
-		background-color: #ddd;
-		border-radius: 10px;
+	body {
+		overflow: hidden;
+	}
+	h1 {
+		bottom: 340px;
+		left: 140px;
 	}
 
 </style>
 
-<h1>Stock Market Website</h1>
+<body>
+	<div class="bg"></div>
 
-<ul id="choices">
-</ul>
 
-<form action="">
+<div class="container">
+ <h1 class="header">Stock Market Website</h1>
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Stocks</h4>
+        </div>
+        <div class="modal-body">
+          <p><ul id="choices"></ul></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="" class="input">
       <input id="m" autocomplete="off" />
-      <button>Send</button>
+      <button class="btn btn-success send" data-toggle="modal" data-target="#myModal">Search</button>
     </form>
 
 <ul id="info">
@@ -60,7 +105,7 @@
 
 <br>
 <br>
-<div class="pagination">
+<!--<div class="pagination">
 	<a href="#">&laquo;</a>
 	<a href="#" class="active">1</a>
 	<a href="#" >2</a>
@@ -69,7 +114,7 @@
 	<a href="#">5</a>
 	<a href="#">6</a>
 	<a href="#">&raquo;</a>
-</div>
+</div>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -99,12 +144,12 @@
         	console.log(data.descriptionsData);
         	$('#choices').empty();
         	for(var i = 0; i < data.tickerData.length; i++){
-        		$('#choices').append('<h2>' + data.tickerData[i] + "</h2> ");
+        		$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
 
         		// Blackrock API
-        		$.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
-        			$('#info').append('<p>' + response.resultLength + '</p>')
-        		});
+        		// $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
+        		// 	$('#info').append('<p>' + response.resultLength + '</p>')
+        		// });
 
 
         		$('#choices').append('<p>' + data.priceData[i] + " " + data.marketCapData[i] + '</p>');
@@ -117,5 +162,18 @@
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</body>
+
 
 </html>
+
+
+
+
+
+
+
+
+
