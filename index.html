@@ -81,8 +81,6 @@
 	
 
 </style>
-*/
-
 
 <body>
 	<div class="bg"></div>
@@ -112,10 +110,10 @@
 			data: [{
 				type: "line",
 				dataPoints: [
-				  { x: 10, y: 45 },
-				  { x: 20, y: 14 },
-				  { x: 30, y: 20 },
-				  { x: 40, y: 60 },
+				  { x: Math.floor(Math.random() * 10) + 0, y: Math.floor(Math.random() * 50) },
+				  { x: Math.floor(Math.random() * 22) + 22, y: Math.floor(Math.random() * 19) },
+				  { x: Math.floor(Math.random() * 46) + 46, y: Math.floor(Math.random() * 33) },
+				  { x: Math.floor(Math.random() * 60) + 60, y: Math.floor(Math.random() * 10) },
 				]
 			}]
 		});
@@ -154,6 +152,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script>
 	var socket = io();
+
+	// Set seed
+	Math.seed = function(s) {
+    	return function() {
+        	s = Math.sin(s) * 10000; return s - Math.floor(s);
+    	};
+	};
+
 	$(document).ready( function (){
 
 		socket.on('youreconnected', function(){
@@ -172,24 +178,21 @@
 
 		// Formats the tickers
         socket.on('tickersreceived', function(data){
-        	console.log(data.tickerData);
-        	console.log(data.priceData);
-        	console.log(data.marketCapData);
-        	console.log(data.descriptionsData);
         	$('#choices').empty();
         	for(var i = 0; i < data.tickerData.length; i++){
         		$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
 
-        		// Blackrock API
+        		// Blackrock API to get past data
         		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
-        		 	$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
+        		 	console.log(response.resultMap.RETURNS);
+        		 	$('tickers').append('<h2 class="blackrock">' + response.resultMap.RETURNS + "</h2> ");
         		});
 
         		$('#choices').append('<div id=chartContainer' + i + " " + 'style="height: 400px; width: 100%;"></div>');
 
         		makeChart(i);
 
-        		$('#choices').append('<p class="priceCap">' + "Price: " + data.priceData[i] + '  ' +  "Market Cap: " + data.marketCapData[i] + '</p>');
+        		$('#choices').append('<p class="priceCap">' + "<strong>Price: </strong> " + data.priceData[i] + '  ' +  "<strong>Market Cap: </strong>" + data.marketCapData[i] + '</p>');
         		$('#choices').append('<p>' + data.descriptionsData[i] + '</p>');
 			
         	}
