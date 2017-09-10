@@ -47,7 +47,6 @@
 
 	.bg { 
     /* The image used */
-		
 		background-image: url('https://ecohousescam.files.wordpress.com/2013/06/money-grow.jpg');
 		/* Full height */
 		height: 100%; 
@@ -60,15 +59,14 @@
 		z-index: -2;
 	}
 
-	body {
-		overflow: hidden;
-	}
 	h1 {
 		bottom: 340px;
 		left: 140px;
 	}
 
 </style>
+*/
+
 
 <body>
 	<div class="bg"></div>
@@ -85,7 +83,39 @@
           <h4 class="modal-title">Stocks</h4>
         </div>
         <div class="modal-body">
-          <p><ul id="choices"></ul></p>
+          <p><ul id="choices">
+			/*
+			<script type="text/javascript">
+	window.onload = function() {
+		var chart = new CanvasJS.Chart("chartContainer", {
+			title: {
+				text: "Line Chart"
+			},
+			axisX: {
+				interval: 10
+			},
+			data: [{
+				type: "line",
+				dataPoints: [
+				  { x: 10, y: 45 },
+				  { x: 20, y: 14 },
+				  { x: 30, y: 20 },
+				  { x: 40, y: 60 },
+				  { x: 50, y: 50 },
+				  { x: 60, y: 80 },
+				]
+			}]
+		});
+		chart.render();
+	}
+	</script>
+
+
+
+
+			*/
+
+          </ul></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -106,45 +136,7 @@
 <br>
 <br>
 
-<!DOCTYPE HTML>
-<html>
-<head>
-	<script type="text/javascript">
-	window.onload = function() {
-		var chart = new CanvasJS.Chart("chartContainer", {
-			title: {
-				text: "Line Chart"
-			},
-			axisX: {
-				interval: 10
-			},
-			data: [{
-				type: "line",
-				dataPoints: [
-				  { x: 10, y: 45 },
-				  { x: 20, y: 14 },
-				  { x: 30, y: 20 },
-				  { x: 40, y: 60 },
-				  { x: 50, y: 50 },
-				  { x: 60, y: 80 },
-				  { x: 70, y: 40 },
-				  { x: 80, y: 60 },
-				  { x: 90, y: 10 },
-				  { x: 100, y: 50 },
-				  { x: 110, y: 40 },
-				  { x: 120, y: 14 },
-				  { x: 130, y: 70 },
-				  { x: 140, y: 40 },
-				  { x: 150, y: 90 },
-				]
-			}]
-		});
-		chart.render();
-	}
-	</script>
-	<script src="/canvasjs.min.js"></script>
-	<title>CanvasJS Example</title>
-</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/jquery.canvasjs.min.js"></script>
 
 <body>
 	<div id="chartContainer" style="height: 400px; width: 100%;"></div>
@@ -183,9 +175,9 @@
         		$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
 
         		// Blackrock API
-        		// $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
-        		// 	$('#info').append('<p>' + response.resultLength + '</p>')
-        		// });
+        		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[i] }, function(response) {
+        		 	$('#choices').append('<h2 class="tickers">' + data.tickerData[i] + "</h2> ");
+        		});
 
 
         		$('#choices').append('<p>' + data.priceData[i] + " " + data.marketCapData[i] + '</p>');
