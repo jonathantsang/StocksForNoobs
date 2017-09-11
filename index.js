@@ -48,7 +48,6 @@ function Scrape(word){
         	var res = ticker.exec(a.text());
         	if(res != null){
         		if(res in dict){
-        			console.log("duplicate");
         			data.names.push(null);
         		} else {
         			dict[res] = true;
@@ -68,15 +67,12 @@ function Scrape(word){
         $('td.localName').each(function(i, element){
         	var a = $(this);
         	var res = a.text();
-        	console.log(res);
         	if(res != null){
         		data.titles.push(res);
-        		console.log(res);
         	} else {
         		data.titles.push(null);
         	}
         });
-        console.log(data.titles);
 
         // Get the prices 
         $('td.price').each(function(i, element){
@@ -86,12 +82,10 @@ function Scrape(word){
         	var res = ticker.exec(a.text());
         	if(res != null){
         		data.prices.push(res[0]);
-        		console.log(res[0]);
         	} else {
         		data.prices.push(null);
         	}
         });
-        console.log(data.prices);
 
         // Get the marketCaps
         $('td.mktCap').each(function(i, element){
@@ -100,12 +94,10 @@ function Scrape(word){
         	var res = ticker.exec(a.text());
         	if(res != null){
         		data.marketCaps.push(res[0]);
-        		console.log(res[0]);
         	} else {
         		data.marketCaps.push(null);
         	}
         });
-        console.log(data.marketCaps);
 
         // Get the descriptions
         $('div.description').each(function(i, element){
@@ -114,12 +106,10 @@ function Scrape(word){
         	var res = ticker.exec(a.text());
         	if(res != null){
         		data.descriptions.push(res[0]);
-        		console.log(res[0]);
         	} else {
         		data.descriptions.push(null);
         	}
         });
-        console.log(data.descriptions);
     }
     // Validate the data by checking each row
     var resultsPerPage = 15;

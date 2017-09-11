@@ -101,6 +101,7 @@ body {
 			var chart = new CanvasJS.Chart("chartContainer" + i, {
 			data: [{
 				type: "line",
+        color: "rgba(0,75,141,0.7)",
 				dataPoints: arrayOfPoints
 			}],
 			backgroundColor: [
@@ -121,15 +122,19 @@ body {
             ],
 			scales: {
       			xAxes: [{
-        			display: false,
-        			ticks: {
-          				min: 0
-        			}
+        			display: false
       			}],
       			yAxes: [{
         			display: false
       			}],
-    		}
+    		},
+        axisX:{
+          title: "Date",
+          valueFormatString: "DD-MMM" 
+        },
+        axisY:{
+          title: "Return on Investment (ROI)"
+        },
 			});
 		chart.render();
 	}
@@ -197,24 +202,41 @@ body {
         socket.on('tickersreceived', function(data){
         	$('#choices').empty();
         	var p = 0;
+          var queue = [];
         	for(var k = 0; k < data.tickerData.length; k++){
-        		console.log(k);
         		$('#choices').append('<h2 class="tickers">' + data.tickerData[k] + " - " + data.titleData[k] + "</h2> ");
-        		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 70%;"></div>');
+        		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 85%;"></div>');
+            queue[data.tickerData[k]] = k;
 
         		// Blackrock API to get past data
         		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[k] }, function(response) {
         		 	var arrayOfPoints = [];
-        		 	if(response.resultMap.RETURNS != undefined && response.resultMap.RETURNS != null){
-        		 		// Go through performanceChart
-        		 		for(var j = 0; j < 50; j++){
-        		 			var point = {x: response.resultMap.RETURNS[0].performanceChart[j][0], y: response.resultMap.RETURNS[0].performanceChart[j][1]};
+        		 	if(response.resultMap.RETURNS != undefined && response.resultMap.RETURNS != null &&
+                  response.resultMap.RETURNS[0].performanceChart != null){
+                var len = response.resultMap.RETURNS[0].performanceChart.length;
+                var ticker = response.resultMap.RETURNS[0].identifier.substr(0,4);
+                console.log(response.resultMap.RETURNS[0].identifier.substr(0,4));
+                console.log(queue[ticker])
+        		 		// Go through performanceChart, since it is async use 50 instead of len points
+        		 		for(var j = 0; j < len; j++){
+                  // Only for first value
+                  var valueX = response.resultMap.RETURNS[0].performanceChart[j][0].toString();
+                  console.log(valueX);
+                  var valueY = response.resultMap.RETURNS[0].performanceChart[j][1].toString();
+                  // Date is built as yyyymmdd
+                  var year = parseInt(valueX.substr(0, 2));
+                  var month = parseInt(valueX.substr(4, 2));
+                  var day = parseInt(valueX.substr(6, 2));
+
+                  // for Y need to translate for the price
+                  var totalY = parseFloat(valueY);
+
+        		 			var point = {x: new Date(parseInt(valueX)), y: totalY};
         		 			arrayOfPoints.push(point);
         		 		}
-        		 		makeChart(p, arrayOfPoints);
-        		 		p++;
+                console.log(arrayOfPoints);
+        		 		makeChart(queue[ticker], arrayOfPoints);
         		 	} else {
-        		 		p++;
         		 	}
         		});
         		
