@@ -216,12 +216,11 @@ body {
                 var len = response.resultMap.RETURNS[0].performanceChart.length;
                 var ticker = response.resultMap.RETURNS[0].identifier.substr(0,4);
                 console.log(response.resultMap.RETURNS[0].identifier.substr(0,4));
-                console.log(queue[ticker])
+                console.log("queue is " + queue[ticker])
         		 		// Go through performanceChart, since it is async use 50 instead of len points
         		 		for(var j = 0; j < len; j++){
                   // Only for first value
                   var valueX = response.resultMap.RETURNS[0].performanceChart[j][0].toString();
-                  console.log(valueX);
                   var valueY = response.resultMap.RETURNS[0].performanceChart[j][1].toString();
                   // Date is built as yyyymmdd
                   var year = parseInt(valueX.substr(0, 2));
@@ -234,7 +233,6 @@ body {
         		 			var point = {x: new Date(parseInt(valueX)), y: totalY};
         		 			arrayOfPoints.push(point);
         		 		}
-                console.log(arrayOfPoints);
         		 		makeChart(queue[ticker], arrayOfPoints);
         		 	} else {
         		 	}
