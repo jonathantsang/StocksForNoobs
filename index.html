@@ -200,7 +200,7 @@ body {
         	for(var k = 0; k < data.tickerData.length; k++){
         		console.log(k);
         		$('#choices').append('<h2 class="tickers">' + data.tickerData[k] + " - " + data.titleData[k] + "</h2> ");
-        		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 85%;"></div>');
+        		$('#choices').append('<div id=chartContainer' + k + " " + 'style="height: 400px; width: 70%;"></div>');
 
         		// Blackrock API to get past data
         		 $.get("https://www.blackrock.com/tools/hackathon/performance", {"identifiers": data.tickerData[k] }, function(response) {
